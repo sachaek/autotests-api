@@ -24,7 +24,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x14\x63ourse_service.proto\x12\x0buserservice\"%\n\x10GetCourseRequest\x12\x11\n\tcourse_id\x18\x01 \x01(\t\"H\n\x0fGetUserResponse\x12\x11\n\tcourse_id\x18\x01 \x01(\t\x12\r\n\x05title\x18\x02 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t2Y\n\rCourseService\x12H\n\tGetCourse\x12\x1d.userservice.GetCourseRequest\x1a\x1c.userservice.GetUserResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x14\x63ourse_service.proto\x12\x0buserservice\"%\n\x10GetCourseRequest\x12\x11\n\tcourse_id\x18\x01 \x01(\t\"J\n\x11GetCourseResponse\x12\x11\n\tcourse_id\x18\x01 \x01(\t\x12\r\n\x05title\x18\x02 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t2[\n\rCourseService\x12J\n\tGetCourse\x12\x1d.userservice.GetCourseRequest\x1a\x1e.userservice.GetCourseResponseb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -33,8 +33,8 @@ if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
   _globals['_GETCOURSEREQUEST']._serialized_start=37
   _globals['_GETCOURSEREQUEST']._serialized_end=74
-  _globals['_GETUSERRESPONSE']._serialized_start=76
-  _globals['_GETUSERRESPONSE']._serialized_end=148
-  _globals['_COURSESERVICE']._serialized_start=150
-  _globals['_COURSESERVICE']._serialized_end=239
+  _globals['_GETCOURSERESPONSE']._serialized_start=76
+  _globals['_GETCOURSERESPONSE']._serialized_end=150
+  _globals['_COURSESERVICE']._serialized_start=152
+  _globals['_COURSESERVICE']._serialized_end=243
 # @@protoc_insertion_point(module_scope)

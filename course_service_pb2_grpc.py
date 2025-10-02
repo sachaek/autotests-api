@@ -37,7 +37,7 @@ class CourseServiceStub(object):
         self.GetCourse = channel.unary_unary(
                 '/userservice.CourseService/GetCourse',
                 request_serializer=course__service__pb2.GetCourseRequest.SerializeToString,
-                response_deserializer=course__service__pb2.GetUserResponse.FromString,
+                response_deserializer=course__service__pb2.GetCourseResponse.FromString,
                 _registered_method=True)
 
 
@@ -56,7 +56,7 @@ def add_CourseServiceServicer_to_server(servicer, server):
             'GetCourse': grpc.unary_unary_rpc_method_handler(
                     servicer.GetCourse,
                     request_deserializer=course__service__pb2.GetCourseRequest.FromString,
-                    response_serializer=course__service__pb2.GetUserResponse.SerializeToString,
+                    response_serializer=course__service__pb2.GetCourseResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -85,7 +85,7 @@ class CourseService(object):
             target,
             '/userservice.CourseService/GetCourse',
             course__service__pb2.GetCourseRequest.SerializeToString,
-            course__service__pb2.GetUserResponse.FromString,
+            course__service__pb2.GetCourseResponse.FromString,
             options,
             channel_credentials,
             insecure,
