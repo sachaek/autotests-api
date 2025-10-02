@@ -207,3 +207,10 @@ marimo/_lsp/
 __marimo__/
 ".idea/"
 .qodo
+/.idea/.gitignore
+/.idea/autotests-api.iml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/inspectionProfiles/profiles_settings.xml
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/vcs.xml
