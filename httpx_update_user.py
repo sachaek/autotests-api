@@ -32,7 +32,6 @@ update_user_payload = {
   "firstName": "string",
   "middleName": "string"
 }
-params = {"user_id": login_response_id}
 
 update_user_response = httpx.patch(f"http://localhost:8000/api/v1/users/{login_response_id}",
                                  json=update_user_payload,
