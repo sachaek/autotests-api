@@ -1,2 +1,0 @@
-class AuthenticationClient:
-    def login_api(self, )
