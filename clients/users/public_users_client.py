@@ -41,7 +41,7 @@ class PublicUsersClient(APIClient):
         """
         return self.post("/api/v1/users", json=request)
 
-    def create_user(self, request: CreateUserRequestDict):
+    def create_user(self, request: CreateUserRequestDict) -> dict:
         response = self.create_user_api(request)
         return response.json()
 
