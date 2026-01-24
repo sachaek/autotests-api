@@ -20,6 +20,7 @@ class Exercise(TypedDict):
     estimatedTime: str
 
 
+
 class GetExercisesResponseDict(TypedDict):
     """
     Описание структуры ответа при получении списка заданий.
