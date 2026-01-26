@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict, EmailStr
 
 
 # Добавили суффикс Schema вместо Dict
@@ -6,6 +6,8 @@ class TokenSchema(BaseModel):  # Наследуем от BaseModel вместо 
     """
     Описание структуры аутентификационных токенов.
     """
+    model_config = ConfigDict(populate_by_name=True)
+
     token_type: str = Field(alias="tokenType")  # Использовали alise
     access_token: str = Field(alias="accessToken")  # Использовали alise
     refresh_token: str = Field(alias="refreshToken")  # Использовали alise
@@ -16,7 +18,7 @@ class LoginRequestSchema(BaseModel):  # Наследуем от BaseModel вме
     """
     Описание структуры запроса на аутентификацию.
     """
-    email: str
+    email: EmailStr
     password: str
 
 
