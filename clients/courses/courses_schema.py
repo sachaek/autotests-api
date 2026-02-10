@@ -12,7 +12,7 @@ class CourseSchema(BaseModel):
     id: str
     title: str
     max_score: int = Field(alias="maxScore")
-    minScore: int = Field(alias="minScore")
+    min_score: int = Field(alias="minScore")
     description: str
     preview_file: FileSchema = Field(alias="previewFile")  # Вложенная структура файла
     estimated_time: str = Field(alias="estimatedTime")
@@ -23,7 +23,8 @@ class GetCoursesQuerySchema(BaseModel):
     """
     Описание структуры запроса на получение списка курсов.
     """
-    userId: str
+    model_config = ConfigDict(populate_by_name=True)
+    user_id: str
 
 
 class CreateCourseRequestSchema(BaseModel):

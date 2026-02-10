@@ -19,7 +19,6 @@ create_user_response = public_users_client.create_user(create_user_request)
 
 user_id = create_user_response.user.id
 
-# 2) Делаем авторизованный запрос на получение пользователя через PrivateUsersClient.get_user_api
 auth_user = AuthenticationUserSchema(
     email=create_user_request.email,
     password=create_user_request.password,
@@ -29,10 +28,8 @@ private_users_client = get_private_users_client(auth_user)
 get_user_response = private_users_client.get_user_api(user_id)
 get_user_response.raise_for_status()
 
-# 3) Генерируем JSON Schema из модели GetUserResponseSchema
 get_user_response_schema = GetUserResponseSchema.model_json_schema()
 
-# 4) Валидируем, что ответ GET /api/v1/users/{user_id} соответствует JSON Schema
 user_json = get_user_response.json()
 validate_json_schema(instance=user_json, schema=get_user_response_schema)
 
