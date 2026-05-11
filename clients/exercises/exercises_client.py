@@ -2,7 +2,7 @@ from httpx import Response
 
 from clients.api_client import APIClient
 from clients.private_http_builder import get_private_http_client, AuthenticationUserSchema
-from clients.exercises.exercises_schema import GetExercisesQuerySchema, GetExercisesResponseSchema, GetExerciseResponseSchema, CreateExercisesRequestSchema, CreateExerciseResponseSchema, UpdateExercisesRequestSchema, UpdateExerciseResponseSchema
+from clients.exercises.exercises_schema import GetExercisesQuerySchema, GetExercisesResponseSchema, GetExerciseResponseSchema, CreateExerciseRequestSchema, CreateExerciseResponseSchema, UpdateExerciseRequestSchema, UpdateExerciseResponseSchema
 
 
 class ExercisesClient(APIClient):
@@ -50,7 +50,7 @@ class ExercisesClient(APIClient):
         # return response.json()
         return GetExerciseResponseSchema.model_validate_json(response.text)
 
-    def create_exercise_api(self, request: CreateExercisesRequestSchema) -> Response:
+    def create_exercise_api(self, request: CreateExerciseRequestSchema) -> Response:
         """
         Метод создания задания
         :param request: Словарь с title, courseId,
@@ -62,7 +62,7 @@ class ExercisesClient(APIClient):
             json=request.model_dump(by_alias=True)
         )
 
-    def create_exercise(self, request: CreateExercisesRequestSchema) -> CreateExerciseResponseSchema:
+    def create_exercise(self, request: CreateExerciseRequestSchema) -> CreateExerciseResponseSchema:
         """
         Метод создания задания.
 
@@ -76,7 +76,7 @@ class ExercisesClient(APIClient):
 
     def update_exercise_api(self,
                             exercise_id: str,
-                            request: UpdateExercisesRequestSchema) -> Response:
+                            request: UpdateExerciseRequestSchema) -> Response:
         """
         Метод обновления задания.
 
@@ -92,7 +92,7 @@ class ExercisesClient(APIClient):
 
     def update_exercise(self,
                         exercise_id: str,
-                        request: UpdateExercisesRequestSchema) -> UpdateExerciseResponseSchema:
+                        request: UpdateExerciseRequestSchema) -> UpdateExerciseResponseSchema:
         """
         Метод обновления задания.
 

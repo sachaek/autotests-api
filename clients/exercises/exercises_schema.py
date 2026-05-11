@@ -43,7 +43,7 @@ class GetExercisesQuerySchema(BaseModel):
     course_id: str = Field(alias="courseId")
 
 
-class CreateExercisesRequestSchema(BaseModel):
+class CreateExerciseRequestSchema(BaseModel):
     """
     Описание структуры запроса на создание задания.
     """
@@ -65,7 +65,7 @@ class CreateExerciseResponseSchema(BaseModel):
     exercise: ExerciseSchema
 
 
-class UpdateExercisesRequestSchema(BaseModel):
+class UpdateExerciseRequestSchema(BaseModel):
     """
     Описание структуры запроса на обновление задания.
     """
