@@ -13,7 +13,8 @@ from tools.assertions.users import assert_create_user_response, assert_get_user_
 
 @pytest.mark.users  # Добавили маркировку users
 @pytest.mark.regression  # Добавили маркировку regression
-def test_create_user(public_users_client: PublicUsersClient): # Используем фикстуру API клиента
+@pytest.mark.parametrize("email", ["mail.ru", "gmail.com", "example.com"])
+def test_create_user(email: str, public_users_client: PublicUsersClient): # Используем фикстуру API клиента
     # Формируем тело запроса на создание пользователя
     request = CreateUserRequestSchema()
    # Отправляем запрос на создание пользователя
