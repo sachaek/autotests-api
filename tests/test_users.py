@@ -9,6 +9,7 @@ from fixtures.users import UserFixture
 from tools.assertions.base import assert_status_code
 from tools.assertions.schema import validate_json_schema
 from tools.assertions.users import assert_create_user_response, assert_get_user_response
+from tools.fakers import fake
 
 
 @pytest.mark.users  # Добавили маркировку users
@@ -16,7 +17,7 @@ from tools.assertions.users import assert_create_user_response, assert_get_user_
 @pytest.mark.parametrize("email", ["mail.ru", "gmail.com", "example.com"])
 def test_create_user(email: str, public_users_client: PublicUsersClient): # Используем фикстуру API клиента
     # Формируем тело запроса на создание пользователя
-    request = CreateUserRequestSchema()
+    request = CreateUserRequestSchema(email=fake.email(domain=email))
    # Отправляем запрос на создание пользователя
     response = public_users_client.create_user_api(request)
     # Инициализируем модель ответа на основе полученного JSON в ответе
