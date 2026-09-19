@@ -39,4 +39,11 @@ def assert_internal_error_response(
         actual: InternalErrorResponseSchema,
         expected: InternalErrorResponseSchema
 ):
+    """
+    Функция для проверки внутренней ошибки. Например, ошибки 404 (File not found).
+
+    :param actual: Фактический ответ API.
+    :param expected: Ожидаемый ответ API.
+    :raises AssertionError: Если значения полей не совпадают.
+    """
     assert_equal(actual.details, expected.details, "details")
