@@ -15,12 +15,24 @@ from tools.assertions.schema import validate_json_schema
 @pytest.mark.courses
 @pytest.mark.regression
 class TestCourses:
+    """
+    Набор автотестов для эндпоинтов /api/v1/courses.
+    """
+
     def test_get_courses(
             self, 
             courses_client: CoursesClient,
             function_user: UserFixture,
             function_course: CourseFixture
             ):
+        """
+        Проверяет получение списка курсов пользователя: статус-код 200, тело ответа и JSON schema.
+
+        :param courses_client: Авторизованный API-клиент для работы с курсами.
+        :param function_user: Фикстура пользователя, по id которого запрашивается список курсов.
+        :param function_course: Фикстура ранее созданного курса этого пользователя.
+        :raises AssertionError: Если статус-код, тело ответа или JSON schema не соответствуют ожидаемым.
+        """
         query = GetCoursesQuerySchema(user_id=function_user.response.user.id)
         response = courses_client.get_courses_api(query)
         response_data = GetCoursesResponseSchema.model_validate_json(response.text)
@@ -31,6 +43,13 @@ class TestCourses:
         validate_json_schema(response.json(), response_data.model_json_schema())
 
     def test_update_course(self, courses_client: CoursesClient, function_course: CourseFixture):
+        """
+        Проверяет обновление курса: статус-код 200, тело ответа и JSON schema.
+
+        :param courses_client: Авторизованный API-клиент для работы с курсами.
+        :param function_course: Фикстура ранее созданного курса.
+        :raises AssertionError: Если статус-код, тело ответа или JSON schema не соответствуют ожидаемым.
+        """
         request = UpdateCourseRequestSchema()
         response = courses_client.update_course_api(function_course.response.course.id, request)
         response_data = UpdateCourseResponseSchema.model_validate_json(response.text)
@@ -46,6 +65,14 @@ class TestCourses:
             function_file: FileFixture,
             function_user: UserFixture
             ):
+        """
+        Проверяет создание курса: статус-код 200, тело ответа и JSON schema.
+
+        :param courses_client: Авторизованный API-клиент для работы с курсами.
+        :param function_file: Фикстура файла превью, id которого передаётся в запросе.
+        :param function_user: Фикстура пользователя-создателя курса.
+        :raises AssertionError: Если статус-код, тело ответа или JSON schema не соответствуют ожидаемым.
+        """
         request = CreateCourseRequestSchema(
             preview_file_id = function_file.response.file.id,
             created_by_user_id = function_user.response.user.id

@@ -14,7 +14,17 @@ from tools.assertions.schema import validate_json_schema
 @pytest.mark.files
 @pytest.mark.regression
 class TestFiles:
+    """
+    Набор автотестов для эндпоинтов /api/v1/files.
+    """
+
     def test_create_file(self, files_client: FilesClient):
+        """
+        Проверяет загрузку файла: статус-код 200, тело ответа и JSON schema.
+
+        :param files_client: Авторизованный API-клиент для работы с файлами.
+        :raises AssertionError: Если статус-код, тело ответа или JSON schema не соответствуют ожидаемым.
+        """
         request = CreateFileRequestSchema(upload_file="./testdata/files/image.png")
         response = files_client.create_file_api(request)
         response_data = CreateFileResponseSchema.model_validate_json(response.text)
@@ -25,6 +35,13 @@ class TestFiles:
         validate_json_schema(response.json(), response_data.model_json_schema())
 
     def test_get_file(self, files_client: FilesClient, function_file: FileFixture):
+        """
+        Проверяет получение файла по id: статус-код 200, тело ответа и JSON schema.
+
+        :param files_client: Авторизованный API-клиент для работы с файлами.
+        :param function_file: Фикстура ранее загруженного файла.
+        :raises AssertionError: Если статус-код, тело ответа или JSON schema не соответствуют ожидаемым.
+        """
         response = files_client.get_file_api(function_file.response.file.id)
         response_data = GetFileResponseSchema.model_validate_json(response.text)
 
@@ -35,6 +52,12 @@ class TestFiles:
 
 
     def test_create_file_with_empty_filename(self, files_client: FilesClient):
+        """
+        Проверяет, что создание файла с пустым filename возвращает ошибку валидации 422.
+
+        :param files_client: Авторизованный API-клиент для работы с файлами.
+        :raises AssertionError: Если статус-код, тело ошибки или JSON schema не соответствуют ожидаемым.
+        """
         request = CreateFileRequestSchema(
             filename="",
             upload_file="./testdata/files/image.png"
@@ -48,6 +71,12 @@ class TestFiles:
         validate_json_schema(response.json(), response_data.model_json_schema())
 
     def test_create_file_with_empty_directory(self, files_client: FilesClient):
+        """
+        Проверяет, что создание файла с пустым directory возвращает ошибку валидации 422.
+
+        :param files_client: Авторизованный API-клиент для работы с файлами.
+        :raises AssertionError: Если статус-код, тело ошибки или JSON schema не соответствуют ожидаемым.
+        """
         request = CreateFileRequestSchema(
             directory="",
             upload_file="./testdata/files/image.png"
@@ -61,6 +90,13 @@ class TestFiles:
         validate_json_schema(response.json(), response_data.model_json_schema())
 
     def test_delete_file(self, files_client: FilesClient, function_file: FileFixture):
+        """
+        Проверяет удаление файла: статус-код 200 и последующее получение 404.
+
+        :param files_client: Авторизованный API-клиент для работы с файлами.
+        :param function_file: Фикстура ранее загруженного файла.
+        :raises AssertionError: Если статус-код, тело ошибки или JSON schema не соответствуют ожидаемым.
+        """
         delete_response = files_client.delete_file_api(function_file.response.file.id)
         assert_status_code(delete_response.status_code, HTTPStatus.OK)
 
@@ -73,6 +109,12 @@ class TestFiles:
         validate_json_schema(get_response.json(), get_response_data.model_json_schema())
 
     def test_get_file_with_incorrect_file_id(self, files_client: FilesClient):
+        """
+        Проверяет, что получение файла с некорректным id возвращает ошибку валидации 422.
+
+        :param files_client: Авторизованный API-клиент для работы с файлами.
+        :raises AssertionError: Если статус-код, тело ошибки или JSON schema не соответствуют ожидаемым.
+        """
         response = files_client.get_file_api(file_id="incorrect-file-id")
         response_data = ValidationErrorResponseSchema.model_validate_json(response.text)
 
