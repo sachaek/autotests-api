@@ -4,11 +4,11 @@ import pytest
 
 from clients.errors_schema import InternalErrorResponseSchema
 from clients.exercises.exercises_client import ExercisesClient
-from clients.exercises.exercises_schema import CreateExerciseRequestSchema, CreateExerciseResponseSchema, GetExerciseResponseSchema, UpdateExerciseRequestSchema, UpdateExerciseResponseSchema
+from clients.exercises.exercises_schema import CreateExerciseRequestSchema, CreateExerciseResponseSchema, GetExerciseResponseSchema, GetExercisesQuerySchema, GetExercisesResponseSchema, UpdateExerciseRequestSchema, UpdateExerciseResponseSchema
 from fixtures.courses import CourseFixture
 from fixtures.exercises import ExerciseFixture
 from tools.assertions.base import assert_status_code
-from tools.assertions.exercises import assert_create_exercise_response, assert_exercise_not_found_response, assert_get_exercise_response, assert_update_exercise_response
+from tools.assertions.exercises import assert_create_exercise_response, assert_exercise_not_found_response, assert_get_exercise_response, assert_get_exercises_response, assert_update_exercise_response
 from tools.assertions.schema import validate_json_schema
 
 
@@ -108,3 +108,27 @@ class TestExercises:
         assert_exercise_not_found_response(get_response_data)
 
         validate_json_schema(get_response.json(), get_response_data.model_json_schema())
+
+
+    def test_get_exercises(
+            self, 
+            exercises_client: ExercisesClient,
+            function_exercise: ExerciseFixture,
+            function_course: CourseFixture
+            ):
+        """
+        Проверяет получение списка заданий курса: статус-код 200, тело ответа и JSON schema.
+
+        :param exercises_client: Авторизованный API-клиент для работы с заданиями.
+        :param function_exercise: Фикстура ранее созданного задания этого курса.
+        :param function_course: Фикстура курса, по id которого запрашивается список заданий.
+        :raises AssertionError: Если статус-код, тело ответа или JSON schema не соответствуют ожидаемым.
+        """
+        query = GetExercisesQuerySchema(course_id=function_course.response.course.id)
+        response = exercises_client.get_exercises_api(query)
+        response_data = GetExercisesResponseSchema.model_validate_json(response.text)
+
+        assert_status_code(response.status_code, HTTPStatus.OK)
+        assert_get_exercises_response(response_data, [function_exercise.response])
+
+        validate_json_schema(response.json(), response_data.model_json_schema())
